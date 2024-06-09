@@ -7,7 +7,7 @@ import base64
 from src.functions import draw_hist, download_link
 
 # interact with FastAPI endpoint
-backend = "http://0.0.0.0:8000/"
+backend = "http://server:8000/"
 
 
 def process(input_file, server_url: str):
@@ -22,6 +22,7 @@ def process(input_file, server_url: str):
     return r
 
 
+# Гистограмма распределения классов
 def hist_plot(preds):
     plot_fig = draw_hist(preds)
     st.pyplot(plot_fig)
@@ -42,6 +43,7 @@ def hist_plot(preds):
     st.markdown(link, unsafe_allow_html=True)
 
 
+# Сохрание предсказаний модели
 def preds_(file_name):
     response = requests.get(f"{backend}/download/{file_name}")
     if response.status_code == 200:
@@ -76,7 +78,7 @@ if features_response.status_code == 200:
     st.markdown(link, unsafe_allow_html=True)
 
 st.header("Get predictions on your file")
-input_file = st.file_uploader("Insert CSV file")  # image upload widget
+input_file = st.file_uploader("Insert CSV file")
 
 
 if st.button("Get predictions"):

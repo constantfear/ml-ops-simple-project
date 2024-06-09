@@ -1,0 +1,17 @@
+version: '1'
+
+services:
+  server:
+    build: server/
+    ports: 
+      - 8000:8000
+    container_name: server
+
+  client:
+    build: client/
+    depends_on:
+      - server
+    ports: 
+        - 3000:3000
+    container_name: client
+
