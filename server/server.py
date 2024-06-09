@@ -31,9 +31,11 @@ def get_scores(file: UploadFile = File(...)):
     # Run scorer to get submission file for competition
     submission = scorer.make_pred(preprocessed_df, save_location)
 
+    predictions = submission['preds'].to_list()
+
     submission.to_csv(save_location.replace('input', 'output'), index=False)
 
-    return {"filename": new_filename}
+    return {"filename": new_filename, "predictions": predictions}
 
 
 @app.get("/download/{filename}")
@@ -42,3 +44,9 @@ def download_file(filename: str):
     if os.path.exists(file_location):
         return FileResponse(path=file_location, filename=filename)
     return {"error": "File not found"}
+
+
+@app.get("/feature_importances/{n}")
+def top_n_feature_importances(n: int):
+    top_n_features = scorer.get_feature_importances(n)
+    return {"features": top_n_features}
