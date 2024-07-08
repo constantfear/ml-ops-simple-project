@@ -10,6 +10,6 @@ RUN pip install -r requirements.txt
 
 COPY . /client
 
-EXPOSE 3000
+EXPOSE 8501
 
 CMD ["streamlit", "run", "app.py"]

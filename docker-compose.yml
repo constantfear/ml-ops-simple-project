@@ -12,6 +12,6 @@ services:
     depends_on:
       - server
     ports: 
-        - 3000:3000
+        - 3001:8501
     container_name: client
 
